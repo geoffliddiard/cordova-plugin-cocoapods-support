@@ -6,6 +6,9 @@ var path = require("path");
 var xml2js = require('xml2js');
 var spawn = require('child_process').spawn;
 var parser = new xml2js.Parser();
+var Q = require('q');
+var semver = require('semver');
+
 require('shelljs/global');
 
 module.exports = function (context) {
@@ -14,7 +17,6 @@ module.exports = function (context) {
         return;
     }
 
-    var Q = context.requireCordovaModule('q');
     var podfileContents = [];
     var rootPath = context.opts.projectRoot;
     var configXmlPath = path.join(rootPath, 'config.xml');
@@ -348,7 +350,6 @@ module.exports = function (context) {
     }
 
     function getConfigParser(context, config) {
-        var semver = context.requireCordovaModule('semver');
         var ConfigParser;
 
         if (semver.lt(context.opts.cordova.version, '5.4.0')) {
